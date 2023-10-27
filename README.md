@@ -1,1 +1,1 @@
-# Leatina-cooking-simulator
+# Leatina Cooking Simulator
