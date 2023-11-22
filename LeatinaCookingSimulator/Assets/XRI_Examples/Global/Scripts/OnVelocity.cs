@@ -1,85 +1,77 @@
+﻿using System;
+using UnityEngine;
 using UnityEngine.Events;
 
-namespace UnityEngine.XR.Content.Interaction
+/// <summary>
+/// Calls events for when the velocity of this objects breaks the begin and end threshold
+/// </summary>
+[RequireComponent(typeof(Rigidbody))]
+public class OnVelocity : MonoBehaviour
 {
-    /// <summary>
-    /// Calls events for when the velocity of this objects breaks the begin and end threshold.
-    /// </summary>
-    [RequireComponent(typeof(Rigidbody))]
-    public class OnVelocity : MonoBehaviour
+    [Tooltip("The speed calls the begin event")]
+    public float beginThreshold = 1.25f;
+
+    [Tooltip("The speed calls the end event")]
+    public float endThreshold = 0.25f;
+
+    [Serializable] public class VelocityEvent : UnityEvent<MonoBehaviour> { }
+
+    // Begin threshold has been broken
+    public VelocityEvent OnBegin = new VelocityEvent();
+
+    // End threshold has been broken
+    public VelocityEvent OnEnd = new VelocityEvent();
+
+    private Rigidbody rigidBody = null;
+    private bool hasBegun = false;
+
+    private void Awake()
     {
-        [SerializeField]
-        [Tooltip("The speed that will trigger the begin event.")]
-        float m_BeginThreshold = 1.25f;
+        rigidBody = GetComponent<Rigidbody>();
+    }
 
-        [SerializeField]
-        [Tooltip("The speed that will trigger the end event.")]
-        float m_EndThreshold = 0.25f;
+    private void Update()
+    {
+        CheckVelocity();
+    }
 
-        [SerializeField]
-        [Tooltip("Event that triggers when speed meets the begin threshold.")]
-        UnityEvent m_OnBegin = new UnityEvent();
+    private void CheckVelocity()
+    {
+        float speed = rigidBody.velocity.magnitude;
+        hasBegun = HasVelocityBegun(speed);
 
-        [SerializeField]
-        [Tooltip("Event that triggers when the speed dips below the end threshold.")]
-        UnityEvent m_OnEnd = new UnityEvent();
+        if (HasVelcoityEnded(speed))
+            Reset();
+    }
 
-        /// <summary>
-        /// Event that triggers when speed meets the begin threshold.
-        /// </summary>
-        public UnityEvent onBegin => m_OnBegin;
+    private bool HasVelocityBegun(float speed)
+    {
+        if (hasBegun)
+            return true;
 
-        /// <summary>
-        /// Event that triggers when the speed dips below the end threshold.
-        /// </summary>
-        public UnityEvent onEnd => m_OnEnd;
+        bool beginCheck = speed > beginThreshold;
 
-        Rigidbody m_RigidBody;
-        bool m_HasBegun;
+        if (beginCheck)
+            OnBegin.Invoke(this);    
 
-        void Awake()
-        {
-            m_RigidBody = GetComponent<Rigidbody>();
-        }
+        return beginCheck;
+    }
 
-        void Update()
-        {
-            CheckVelocity();
-        }
+    private bool HasVelcoityEnded(float speed)
+    {
+        if (!hasBegun)
+            return false;
 
-        void CheckVelocity()
-        {
-            var speed = m_RigidBody.velocity.magnitude;
-            m_HasBegun = HasVelocityBegun(speed);
+        bool endCheck = speed < endThreshold;
 
-            if (HasVelocityEnded(speed))
-                m_HasBegun = false;
-        }
+        if (endCheck)
+            OnEnd.Invoke(this);
 
-        bool HasVelocityBegun(float speed)
-        {
-            if (m_HasBegun)
-                return true;
+        return endCheck;
+    }
 
-            var beginCheck = speed > m_BeginThreshold;
-
-            if (beginCheck)
-                m_OnBegin.Invoke();
-
-            return beginCheck;
-        }
-
-        bool HasVelocityEnded(float speed)
-        {
-            if (!m_HasBegun)
-                return false;
-
-            var endCheck = speed < m_EndThreshold;
-
-            if (endCheck)
-                m_OnEnd.Invoke();
-
-            return endCheck;
-        }
+    public void Reset()
+    {
+        hasBegun = false;
     }
 }

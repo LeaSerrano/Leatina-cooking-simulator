@@ -54,7 +54,7 @@ namespace UnityEngine.XR.Content.Interaction.Analytics
             if (onTrigger == null)
                 return;
 
-            onTrigger.onEnter.AddListener(otherGameObject => Send(onEnterParameter));
+            //onTrigger.onEnter.AddListener(otherGameObject => Send(onEnterParameter));
         }
 
         internal static void Register(IEnumerable<XRBaseInteractable> interactables, StationParameter grabParameter, StationParameter activateParameter = null)

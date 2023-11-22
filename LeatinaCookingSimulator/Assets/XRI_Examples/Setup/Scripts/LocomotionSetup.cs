@@ -157,7 +157,7 @@ namespace UnityEngine.XR.Content.Interaction
 
         void ConnectControlEvents()
         {
-            m_LeftHandLocomotionTypeToggle.onLeverActivate.AddListener(EnableLeftHandMoveAndStrafe);
+            /*m_LeftHandLocomotionTypeToggle.onLeverActivate.AddListener(EnableLeftHandMoveAndStrafe);
             m_LeftHandLocomotionTypeToggle.onLeverDeactivate.AddListener(EnableLeftHandTeleportAndTurn);
             m_RightHandLocomotionTypeToggle.onLeverActivate.AddListener(EnableRightHandMoveAndStrafe);
             m_RightHandLocomotionTypeToggle.onLeverDeactivate.AddListener(EnableRightHandTeleportAndTurn);
@@ -191,12 +191,12 @@ namespace UnityEngine.XR.Content.Interaction
             m_GrabMoveToggle.onRelease.AddListener(DisableGrabMove);
             m_MoveRatioSlider.onValueChange.AddListener(SetGrabMoveRatio);
             m_ScalingToggle.onPress.AddListener(EnableScaling);
-            m_ScalingToggle.onRelease.AddListener(DisableScaling);
+            m_ScalingToggle.onRelease.AddListener(DisableScaling);*/
         }
 
         void DisconnectControlEvents()
         {
-            m_LeftHandLocomotionTypeToggle.onLeverActivate.RemoveListener(EnableLeftHandMoveAndStrafe);
+            /*m_LeftHandLocomotionTypeToggle.onLeverActivate.RemoveListener(EnableLeftHandMoveAndStrafe);
             m_LeftHandLocomotionTypeToggle.onLeverDeactivate.RemoveListener(EnableLeftHandTeleportAndTurn);
             m_RightHandLocomotionTypeToggle.onLeverActivate.RemoveListener(EnableRightHandMoveAndStrafe);
             m_RightHandLocomotionTypeToggle.onLeverDeactivate.RemoveListener(EnableRightHandTeleportAndTurn);
@@ -230,34 +230,34 @@ namespace UnityEngine.XR.Content.Interaction
             m_GrabMoveToggle.onRelease.RemoveListener(DisableGrabMove);
             m_MoveRatioSlider.onValueChange.RemoveListener(SetGrabMoveRatio);
             m_ScalingToggle.onPress.RemoveListener(EnableScaling);
-            m_ScalingToggle.onRelease.RemoveListener(DisableScaling);
+            m_ScalingToggle.onRelease.RemoveListener(DisableScaling);*/
         }
 
         void InitializeControls()
         {
             var isLeftHandMoveAndStrafe = m_Manager.leftHandLocomotionType == LocomotionManager.LocomotionType.MoveAndStrafe;
             var isRightHandMoveAndStrafe = m_Manager.rightHandLocomotionType == LocomotionManager.LocomotionType.MoveAndStrafe;
-            m_LeftHandLocomotionTypeToggle.value = isLeftHandMoveAndStrafe;
-            m_RightHandLocomotionTypeToggle.value = isRightHandMoveAndStrafe;
+            //m_LeftHandLocomotionTypeToggle.value = isLeftHandMoveAndStrafe;
+            //m_RightHandLocomotionTypeToggle.value = isRightHandMoveAndStrafe;
 
             m_LeftHandTurnStyleSelection.SetActive(!isLeftHandMoveAndStrafe);
             m_RightHandTurnStyleSelection.SetActive(!isRightHandMoveAndStrafe);
 
-            m_LeftHandTurnStyleToggle.value = (m_Manager.leftHandTurnStyle == LocomotionManager.TurnStyle.Smooth);
-            m_RightHandTurnStyleToggle.value = (m_Manager.rightHandTurnStyle == LocomotionManager.TurnStyle.Smooth);
+            //m_LeftHandTurnStyleToggle.value = (m_Manager.leftHandTurnStyle == LocomotionManager.TurnStyle.Smooth);
+            //m_RightHandTurnStyleToggle.value = (m_Manager.rightHandTurnStyle == LocomotionManager.TurnStyle.Smooth);
 
-            m_MoveSpeedSlider.value = Mathf.InverseLerp(k_MinMoveSpeed, k_MaxMoveSpeed, m_Manager.dynamicMoveProvider.moveSpeed);
+            //m_MoveSpeedSlider.value = Mathf.InverseLerp(k_MinMoveSpeed, k_MaxMoveSpeed, m_Manager.dynamicMoveProvider.moveSpeed);
             m_StrafeToggle.toggleValue = m_Manager.dynamicMoveProvider.enableStrafe;
             m_ComfortModeToggle.toggleValue = (m_Manager.enableComfortMode);
             m_GravityToggle.toggleValue = m_Manager.useGravity;
             m_FlyToggle.toggleValue = m_Manager.enableFly;
 
-            m_TurnSpeedKnob.value = m_Manager.smoothTurnProvider.turnSpeed / k_MaxTurnSpeed;
+            //m_TurnSpeedKnob.value = m_Manager.smoothTurnProvider.turnSpeed / k_MaxTurnSpeed;
             m_TurnAroundToggle.toggleValue = m_Manager.snapTurnProvider.enableTurnAround;
-            m_SnapTurnKnob.value = m_Manager.snapTurnProvider.turnAmount / k_MaxSnapTurnAmount;
+            //m_SnapTurnKnob.value = m_Manager.snapTurnProvider.turnAmount / k_MaxSnapTurnAmount;
 
             m_GrabMoveToggle.toggleValue = m_Manager.enableGrabMovement;
-            m_MoveRatioSlider.value = Mathf.InverseLerp(k_MinGrabMoveRatio, k_MaxGrabMoveRatio, m_Manager.twoHandedGrabMoveProvider.moveFactor);
+            //m_MoveRatioSlider.value = Mathf.InverseLerp(k_MinGrabMoveRatio, k_MaxGrabMoveRatio, m_Manager.twoHandedGrabMoveProvider.moveFactor);
             m_ScalingToggle.toggleValue = m_Manager.enableGrabMovement && m_Manager.twoHandedGrabMoveProvider.enableScaling;
 
             m_MoveSpeedLabel.text = $"{m_Manager.dynamicMoveProvider.moveSpeed.ToString(k_SpeedFormat)}{k_MoveSpeedUnitLabel}";
@@ -455,7 +455,7 @@ namespace UnityEngine.XR.Content.Interaction
 
         void SetTurnSpeed(float knobValue)
         {
-            m_Manager.smoothTurnProvider.turnSpeed = Mathf.Lerp(m_TurnSpeedKnob.minAngle, m_TurnSpeedKnob.maxAngle, knobValue);
+            //m_Manager.smoothTurnProvider.turnSpeed = Mathf.Lerp(m_TurnSpeedKnob.minAngle, m_TurnSpeedKnob.maxAngle, knobValue);
             m_TurnSpeedLabel.text = $"{m_Manager.smoothTurnProvider.turnSpeed.ToString(k_DegreeFormat)}{k_TurnSpeedUnitLabel}";
         }
 
@@ -473,7 +473,7 @@ namespace UnityEngine.XR.Content.Interaction
 
         void SetSnapTurnAmount(float newAmount)
         {
-            m_Manager.snapTurnProvider.turnAmount = Mathf.Lerp(m_SnapTurnKnob.minAngle, m_SnapTurnKnob.maxAngle, newAmount);
+            //m_Manager.snapTurnProvider.turnAmount = Mathf.Lerp(m_SnapTurnKnob.minAngle, m_SnapTurnKnob.maxAngle, newAmount);
             m_SnapTurnLabel.text = $"{m_Manager.snapTurnProvider.turnAmount.ToString(k_DegreeFormat)}{k_SnapTurnAmountLabel}";
         }
 

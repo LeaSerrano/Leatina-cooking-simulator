@@ -52,7 +52,7 @@ namespace UnityEngine.XR.Content.Interaction.Analytics
 
             XrcAnalyticsUtils.Register(m_WateringCanInteractable, new GrabWateringCan());
             if (m_OnPlantGrowsTrigger != null)
-                m_OnPlantGrowsTrigger.onEnter.AddListener(OnWateringPlant);
+                //m_OnPlantGrowsTrigger.onEnter.AddListener(OnWateringPlant);
 
             XrcAnalyticsUtils.Register(m_MalletInteractable, new GrabMallet());
             OnRestorePiggyBank(m_PigBank);
