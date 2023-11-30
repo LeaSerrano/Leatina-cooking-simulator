@@ -6,6 +6,7 @@ public static class GlobalVariables
 {
     public static bool heatOn = false;
     public static bool hotPan = false;
+
 }
 
 

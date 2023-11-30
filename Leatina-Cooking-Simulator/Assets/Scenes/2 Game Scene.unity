@@ -2597,7 +2597,7 @@ MonoBehaviour:
     type: 3}
   m_Move: {fileID: -8198699208435500284, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_SmoothMotionEnabled: 0
-  m_SmoothTurnEnabled: 0
+  m_SmoothTurnEnabled: 1
 --- !u!1001 &222646450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7515,7 +7515,7 @@ Transform:
   m_GameObject: {fileID: 961519303}
   serializedVersion: 2
   m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.27059805, w: 0.6532815}
-  m_LocalPosition: {x: -0.12, y: 0.079, z: -0.01}
+  m_LocalPosition: {x: -0.12, y: 0.079, z: 0.0018}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
