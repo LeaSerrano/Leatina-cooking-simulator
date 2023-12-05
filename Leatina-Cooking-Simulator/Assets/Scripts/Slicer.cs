@@ -2,9 +2,17 @@
 using EzySlice;
 public class Slicer : MonoBehaviour
 {
-    public Material materialAfterSlice;
+    private Material materialAfterSlice;
     public LayerMask sliceMask;
     public bool isTouched;
+
+    
+    private int indexSliceableLayer;
+
+    private void Start() {
+        string layoutSliceable = "Sliceable";
+        indexSliceableLayer = LayerMask.NameToLayer(layoutSliceable);
+    }
 
     private void Update()
     {
@@ -16,6 +24,12 @@ public class Slicer : MonoBehaviour
             
             foreach (Collider objectToBeSliced in objectsToBeSliced)
             {
+                Renderer collisionRenderer = objectToBeSliced.GetComponent<Renderer>();
+
+                if (collisionRenderer != null) {
+                    materialAfterSlice = collisionRenderer.material;
+                }
+
                 SlicedHull slicedObject = SliceObject(objectToBeSliced.gameObject, materialAfterSlice);
 
                 GameObject upperHullGameobject = slicedObject.CreateUpperHull(objectToBeSliced.gameObject, materialAfterSlice);
@@ -36,6 +50,9 @@ public class Slicer : MonoBehaviour
     {
         obj.AddComponent<MeshCollider>().convex = true;
         obj.AddComponent<Rigidbody>();
+        
+        obj.layer = indexSliceableLayer;
+ 
     }
 
     private SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
