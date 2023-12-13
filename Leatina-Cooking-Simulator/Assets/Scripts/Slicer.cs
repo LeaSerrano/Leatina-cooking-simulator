@@ -8,6 +8,7 @@ public class Slicer : MonoBehaviour
 
     
     private int indexSliceableLayer;
+    private string tag;
 
     private void Start() {
         string layoutSliceable = "Sliceable";
@@ -25,6 +26,7 @@ public class Slicer : MonoBehaviour
             foreach (Collider objectToBeSliced in objectsToBeSliced)
             {
                 Renderer collisionRenderer = objectToBeSliced.GetComponent<Renderer>();
+                tag = objectToBeSliced.tag;
 
                 if (collisionRenderer != null) {
                     materialAfterSlice = collisionRenderer.material;
@@ -52,7 +54,7 @@ public class Slicer : MonoBehaviour
         obj.AddComponent<Rigidbody>();
         
         obj.layer = indexSliceableLayer;
- 
+        obj.tag = tag;
     }
 
     private SlicedHull SliceObject(GameObject obj, Material crossSectionMaterial = null)
