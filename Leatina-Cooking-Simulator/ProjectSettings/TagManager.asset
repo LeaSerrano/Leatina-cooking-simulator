@@ -9,6 +9,7 @@ TagManager:
   - Water
   - Destroyer
   - Tomato
+  - Bread
   layers:
   - Default
   - TransparentFX

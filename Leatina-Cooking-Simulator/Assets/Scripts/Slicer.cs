@@ -5,8 +5,10 @@ public class Slicer : MonoBehaviour
     private Material materialAfterSlice;
     public LayerMask sliceMask;
     public bool isTouched;
+    public Material materialTomato;
+    public Material materialBread;
 
-    
+
     private int indexSliceableLayer;
     private string tag;
 
@@ -25,11 +27,17 @@ public class Slicer : MonoBehaviour
             
             foreach (Collider objectToBeSliced in objectsToBeSliced)
             {
+                Debug.Log(objectToBeSliced);
+
                 Renderer collisionRenderer = objectToBeSliced.GetComponent<Renderer>();
                 tag = objectToBeSliced.tag;
 
-                if (collisionRenderer != null) {
-                    materialAfterSlice = collisionRenderer.material;
+                if (tag == "Tomato") {
+                    materialAfterSlice = materialTomato;
+                }
+                else if (tag == "Bread")
+                {
+                    materialAfterSlice = materialBread;
                 }
 
                 SlicedHull slicedObject = SliceObject(objectToBeSliced.gameObject, materialAfterSlice);
