@@ -17,5 +17,6 @@ public class SliceListener : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         slicer.isTouched = true;
+        slicer.isTouchedCollider = other;
     }
 }
