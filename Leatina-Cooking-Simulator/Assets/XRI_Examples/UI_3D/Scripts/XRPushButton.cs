@@ -120,6 +120,8 @@ namespace UnityEngine.XR.Content.Interaction
             }
         }
 
+        public object OnButtonStateChanged { get; internal set; }
+
         public override bool IsHoverableBy(IXRHoverInteractor interactor)
         {
             if (interactor is XRRayInteractor)

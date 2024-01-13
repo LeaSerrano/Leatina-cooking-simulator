@@ -30,9 +30,6 @@ public class Slicer : MonoBehaviour
 
         if (isTouched == true && !hasSliced && isTouchedCollider.gameObject.layer == indexSliceableLayer)
         {
-                Debug.Log("hasSliced : " + hasSliced);
-                Debug.Log("isTouched : " + isTouched);
-
                 isTouched = false;
 
 
