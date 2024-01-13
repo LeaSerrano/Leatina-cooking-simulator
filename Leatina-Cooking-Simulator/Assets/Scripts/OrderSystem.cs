@@ -11,24 +11,35 @@ public class OrderSystem : MonoBehaviour
     void Start()
     {
         orderListSize = GlobalVariables.orderList.Length;
-        GlobalVariables.actualOrder = 1;
+        //GlobalVariables.actualOrder = 1;
+        GlobalVariables.actualOrder = Random.Range(0, orderListSize+1);
+        Debug.Log(GlobalVariables.actualOrder);
         UpdateUI();
     }
 
     void Update()
     {
-        if (GlobalVariables.validRecipe)
+        /*if (GlobalVariables.validRecipe)
         {
             GlobalVariables.actualOrder = Random.Range(0, orderListSize+1);
             Debug.Log(GlobalVariables.actualOrder);
 
-            if (Input.GetButtonDown("Fire1"))
-            {
-                UpdateUI();
+            if (GlobalVariables.actualOrder == 0) {
+                Debug.Log("Tomato");
+            }
+            else if (GlobalVariables.actualOrder == 1) {
+                Debug.Log("Meat");
             }
 
-            GlobalVariables.validRecipe = false;
-        }
+            /*if (Input.GetButtonDown("Fire1"))
+            {
+                UpdateUI();
+            }*/
+
+            // UpdateUI();
+
+            /*GlobalVariables.validRecipe = false;
+        }*/
     }
 
     void UpdateUI()
