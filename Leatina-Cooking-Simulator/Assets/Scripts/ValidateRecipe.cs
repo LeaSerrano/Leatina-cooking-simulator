@@ -3,11 +3,21 @@ using UnityEngine;
 public class ValidateRecipe : MonoBehaviour
 {
     private int ingredientsPresent = 0;
-    private int ingredientsRequis = 2;
-    private bool recetteValide = false;
+    private int ingredientsRequired;
 
     private GameObject bread1;
-    private GameObject tomato;
+    private GameObject secondItem;
+    private string secondItemTag;
+    private GameObject bread2;
+
+    private void Start()
+    {
+        if (GlobalVariables.actualOrder == 0 || GlobalVariables.actualOrder == 1)
+        {
+            ingredientsRequired = 3;
+            secondItemTag = GlobalVariables.orderList[GlobalVariables.actualOrder];
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,24 +25,21 @@ public class ValidateRecipe : MonoBehaviour
         {
             bread1 = other.gameObject;
             ingredientsPresent++;
-
-            Debug.Log("bread enter");
         }
-        else if (other.CompareTag("Tomato") && tomato == null)
+        else if (other.CompareTag(secondItemTag) && secondItem == null)
         {
-            tomato = other.gameObject;
+            secondItem = other.gameObject;
             ingredientsPresent++;
-
-            Debug.Log("tomato enter");
+        }
+        else if (other.CompareTag("Bread") && bread2 == null)
+        {
+            bread2 = other.gameObject;
+            ingredientsPresent++;
         }
 
-        Debug.Log("ingrédients présents : " + ingredientsPresent);
-
-        if (ingredientsPresent == ingredientsRequis && EstRecetteComplete())
+        if (ingredientsPresent == ingredientsRequired && IsRecipeComplete())
         {
-            recetteValide = true;
-
-            Debug.Log("recette valide : " + recetteValide);
+            GlobalVariables.validRecipe = true;
         }
     }
 
@@ -42,21 +49,26 @@ public class ValidateRecipe : MonoBehaviour
         {
             ingredientsPresent--;
             bread1 = null;
-            Debug.Log("bread exit");
         }
-        else if (other.CompareTag("Tomato") && tomato != null && ingredientsPresent > 0)
+        else if (other.CompareTag(secondItemTag) && secondItem != null && ingredientsPresent > 0)
         {
             ingredientsPresent--;
-            tomato = null;
-            Debug.Log("tomato exit");
+            secondItem = null;
+        }
+        else if (other.CompareTag("Bread") && bread2 != null && ingredientsPresent > 0)
+        {
+            ingredientsPresent--;
+            bread2 = null;
         }
     }
 
-    private bool EstRecetteComplete()
+    private bool IsRecipeComplete()
     {
-        Debug.Log("bread1 y : " + bread1.transform.position.y);
-        Debug.Log("tomato y : " + tomato.transform.position.y);
-
-        return (bread1.transform.position.y < tomato.transform.position.y);
+        if ((bread1.transform.position.y < secondItem.transform.position.y && secondItem.transform.position.y < bread2.transform.position.y) ||
+            (bread2.transform.position.y < secondItem.transform.position.y && secondItem.transform.position.y < bread1.transform.position.y))
+        {
+            return true;
+        }
+        return false;
     }
 }
