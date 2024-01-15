@@ -12,7 +12,7 @@ public class OrderSystem : MonoBehaviour
     {
         orderListSize = GlobalVariables.orderList.Length;
         //GlobalVariables.actualOrder = 1;
-        GlobalVariables.actualOrder = Random.Range(0, orderListSize+1);
+        GlobalVariables.actualOrder = Random.Range(0, orderListSize);
         Debug.Log(GlobalVariables.actualOrder);
         UpdateUI();
     }

@@ -28,7 +28,7 @@ public class Slicer : MonoBehaviour
     private void Update()
     {
 
-        if (isTouched == true && !hasSliced && isTouchedCollider.gameObject.layer == indexSliceableLayer)
+        if (isTouched == true && !hasSliced && isTouchedCollider.gameObject.layer == indexSliceableLayer && isTouchedCollider!=null)
         {
                 isTouched = false;
 
@@ -59,7 +59,7 @@ public class Slicer : MonoBehaviour
 
                 hasSliced = true;
         }
-        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer)
+        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer && isTouchedCollider!=null)
         {
             hasSliced = false;
         }
