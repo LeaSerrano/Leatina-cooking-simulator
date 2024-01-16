@@ -11,17 +11,22 @@ public class OrderSystem : MonoBehaviour
     void Start()
     {
         orderListSize = GlobalVariables.orderList.Length;
-        //GlobalVariables.actualOrder = 1;
-        GlobalVariables.actualOrder = Random.Range(0, orderListSize+1);
+        GlobalVariables.actualOrder = 0;
+        //GlobalVariables.actualOrder = Random.Range(0, orderListSize);
         Debug.Log(GlobalVariables.actualOrder);
         UpdateUI();
     }
 
     void Update()
     {
-        /*if (GlobalVariables.validRecipe)
+        if (GlobalVariables.shouldChangeRecipe && !GlobalVariables.shouldDespawnIngredients)
         {
-            GlobalVariables.actualOrder = Random.Range(0, orderListSize+1);
+            if(GlobalVariables.actualOrder == 0) {
+                GlobalVariables.actualOrder = 1;
+            }
+            else {
+                GlobalVariables.actualOrder = 0;
+            }
             Debug.Log(GlobalVariables.actualOrder);
 
             if (GlobalVariables.actualOrder == 0) {
@@ -31,15 +36,10 @@ public class OrderSystem : MonoBehaviour
                 Debug.Log("Meat");
             }
 
-            /*if (Input.GetButtonDown("Fire1"))
-            {
-                UpdateUI();
-            }*/
+            UpdateUI();
 
-            // UpdateUI();
-
-            /*GlobalVariables.validRecipe = false;
-        }*/
+           GlobalVariables.shouldChangeRecipe = false;
+        }
     }
 
     void UpdateUI()

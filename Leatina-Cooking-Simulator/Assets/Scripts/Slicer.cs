@@ -28,10 +28,9 @@ public class Slicer : MonoBehaviour
     private void Update()
     {
 
-        if (isTouched == true && !hasSliced && isTouchedCollider.gameObject.layer == indexSliceableLayer)
+        if (isTouched == true && !hasSliced && isTouchedCollider.gameObject.layer == indexSliceableLayer && isTouchedCollider!=null)
         {
                 isTouched = false;
-
 
                 tag = isTouchedCollider.tag;
 
@@ -59,7 +58,7 @@ public class Slicer : MonoBehaviour
 
                 hasSliced = true;
         }
-        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer)
+        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer && isTouchedCollider!=null)
         {
             hasSliced = false;
         }
@@ -67,7 +66,9 @@ public class Slicer : MonoBehaviour
 
     private void MakeItPhysical(GameObject obj)
     {
-        obj.AddComponent<MeshCollider>().convex = true;
+         MeshCollider meshCollider = obj.AddComponent<MeshCollider>();
+        meshCollider.convex = true;
+
         obj.AddComponent<Rigidbody>();
         
         obj.layer = indexSliceableLayer;
