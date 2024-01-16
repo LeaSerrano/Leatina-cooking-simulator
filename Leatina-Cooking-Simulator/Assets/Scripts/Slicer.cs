@@ -32,7 +32,6 @@ public class Slicer : MonoBehaviour
         {
                 isTouched = false;
 
-
                 tag = isTouchedCollider.tag;
 
                 if (tag == "Tomato")
@@ -67,7 +66,9 @@ public class Slicer : MonoBehaviour
 
     private void MakeItPhysical(GameObject obj)
     {
-        obj.AddComponent<MeshCollider>().convex = true;
+         MeshCollider meshCollider = obj.AddComponent<MeshCollider>();
+        meshCollider.convex = true;
+
         obj.AddComponent<Rigidbody>();
         
         obj.layer = indexSliceableLayer;

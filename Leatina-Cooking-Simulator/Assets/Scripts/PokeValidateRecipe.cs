@@ -23,10 +23,15 @@ public class PokeValidateRecipe : MonoBehaviour
 
             if (GlobalVariables.validRecipe) 
             {
+                invalidRecipeMessage.SetActive(false);
                 StartCoroutine(AfficherMessage(validRecipeMessage));
+                GlobalVariables.shouldDespawnIngredients = true;
+                GlobalVariables.shouldChangeRecipe = true;
+                GlobalVariables.validRecipe = false;
             }
             else 
             {
+                validRecipeMessage.SetActive(false);
                 StartCoroutine(AfficherMessage(invalidRecipeMessage));
             }
         }

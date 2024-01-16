@@ -7,8 +7,10 @@ public static class GlobalVariables
     public static bool heatOn = false;
     public static bool hotPan = false;
     public static bool validRecipe = false;
-    public static string[] orderList = { "Tomato", "Meat"/*, "full" */};
+    public static string[] orderList = { "Tomato", "Meat"};
     public static int actualOrder;
+    public static bool shouldChangeRecipe = false;
+    public static bool shouldDespawnIngredients = false;
 }
 
 
