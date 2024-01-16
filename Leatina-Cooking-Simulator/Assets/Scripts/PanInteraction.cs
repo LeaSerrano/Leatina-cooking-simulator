@@ -13,7 +13,6 @@ public class PanInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("hotPan: "+GlobalVariables.hotPan);
     }
     void OnCollisionEnter(Collision collision)
     {

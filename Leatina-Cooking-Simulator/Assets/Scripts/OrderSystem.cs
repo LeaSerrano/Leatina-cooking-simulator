@@ -11,9 +11,7 @@ public class OrderSystem : MonoBehaviour
     void Start()
     {
         orderListSize = GlobalVariables.orderList.Length;
-        GlobalVariables.actualOrder = 0;
-        //GlobalVariables.actualOrder = Random.Range(0, orderListSize);
-        Debug.Log(GlobalVariables.actualOrder);
+        GlobalVariables.actualOrder = Random.Range(0, orderListSize);
         UpdateUI();
     }
 
@@ -26,14 +24,6 @@ public class OrderSystem : MonoBehaviour
             }
             else {
                 GlobalVariables.actualOrder = 0;
-            }
-            Debug.Log(GlobalVariables.actualOrder);
-
-            if (GlobalVariables.actualOrder == 0) {
-                Debug.Log("Tomato");
-            }
-            else if (GlobalVariables.actualOrder == 1) {
-                Debug.Log("Meat");
             }
 
             UpdateUI();

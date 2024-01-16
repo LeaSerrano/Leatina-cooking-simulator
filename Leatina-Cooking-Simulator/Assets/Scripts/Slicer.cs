@@ -18,6 +18,8 @@ public class Slicer : MonoBehaviour
     private string tag;
     private bool hasSliced;
 
+    public AudioClip cutSound;
+
     private void Start() {
         string layoutSliceable = "Sliceable";
         indexSliceableLayer = LayerMask.NameToLayer(layoutSliceable);
@@ -56,9 +58,11 @@ public class Slicer : MonoBehaviour
 
                 Destroy(isTouchedCollider.gameObject);
 
+                AudioSource.PlayClipAtPoint(cutSound, Camera.main.transform.position);
+
                 hasSliced = true;
         }
-        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer && isTouchedCollider!=null)
+        else if (hasSliced && isTouchedCollider.gameObject.layer != indexSliceableLayer)
         {
             hasSliced = false;
         }
