@@ -11,6 +11,7 @@ public static class GlobalVariables
     public static int actualOrder;
     public static bool shouldChangeRecipe = false;
     public static bool shouldDespawnIngredients = false;
+
 }
 
 

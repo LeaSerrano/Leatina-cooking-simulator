@@ -10,6 +10,7 @@ TagManager:
   - Destroyer
   - Tomato
   - Bread
+  - Meat
   layers:
   - Default
   - TransparentFX

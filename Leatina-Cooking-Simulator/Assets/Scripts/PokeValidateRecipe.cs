@@ -19,7 +19,6 @@ public class PokeValidateRecipe : MonoBehaviour
         boutonPresse = !boutonPresse;
         if (boutonPresse)
         {
-            Debug.Log("Bouton enfoncé. Affichage dans le terminal.");
 
             if (GlobalVariables.validRecipe) 
             {
