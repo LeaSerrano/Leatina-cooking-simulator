@@ -12,7 +12,8 @@ public class Slicer : MonoBehaviour
 
     public Material materialTomato;
     public Material materialBread;
-
+    public Material materialOnion;
+    public Material materialMushroom;
 
     private int indexSliceableLayer;
     private string tag;
@@ -44,6 +45,12 @@ public class Slicer : MonoBehaviour
                 {
                     materialAfterSlice = materialBread;
                 }
+                else if (tag == "Onion") {
+                    materialAfterSlice = materialOnion;
+                }
+                else if (tag == "Mushroom") {
+                    materialAfterSlice = materialMushroom;
+                }
 
                 SlicedHull slicedObject = SliceObject(isTouchedCollider.gameObject, materialAfterSlice);
 
@@ -58,7 +65,11 @@ public class Slicer : MonoBehaviour
 
                 Destroy(isTouchedCollider.gameObject);
 
-                AudioSource.PlayClipAtPoint(cutSound, Camera.main.transform.position);
+                GameObject audioSourceObject = new GameObject("CutSound");
+                AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
+                audioSource.clip = cutSound;
+                audioSource.Play();
+                audioSource.volume = 0.5f;
 
                 hasSliced = true;
         }
