@@ -23,10 +23,10 @@ public class PokeValidateRecipe : MonoBehaviour
             if (GlobalVariables.validRecipe) 
             {
                 invalidRecipeMessage.SetActive(false);
-                StartCoroutine(AfficherMessage(validRecipeMessage));
                 GlobalVariables.shouldDespawnIngredients = true;
                 GlobalVariables.shouldChangeRecipe = true;
                 GlobalVariables.validRecipe = false;
+                StartCoroutine(AfficherMessage(validRecipeMessage));
             }
             else 
             {
@@ -39,7 +39,7 @@ public class PokeValidateRecipe : MonoBehaviour
      IEnumerator AfficherMessage(GameObject message)
     {
         message.SetActive(true);
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
         message.SetActive(false);
     }
 }

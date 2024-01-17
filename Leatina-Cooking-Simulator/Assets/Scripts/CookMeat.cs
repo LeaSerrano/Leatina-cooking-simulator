@@ -43,7 +43,7 @@ public class CookMeat : MonoBehaviour
         {
             Color currentColor = rend.material.color;
 
-            float darkenFactor = 0.3f;
+            float darkenFactor = 0.4f;
             Color darkenedColor = new Color(currentColor.r * darkenFactor, currentColor.g * darkenFactor, currentColor.b * darkenFactor, currentColor.a);
 
             rend.material.color = darkenedColor;
