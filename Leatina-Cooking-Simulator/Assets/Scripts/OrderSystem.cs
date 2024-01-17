@@ -36,23 +36,18 @@ public class OrderSystem : MonoBehaviour
 
     void GenerateRandomRecipe()
     {
-       // GlobalVariables.actualOrder = Random.Range(0, 2);
+       GlobalVariables.actualOrder = Random.Range(0, 2);
+      
 
-        GlobalVariables.actualOrder = 0;
-        GlobalVariables.ingredient1 = 1;
-
-       
-        //Debug.Log("Ingrédient : " + GlobalVariables.orderListRecipe1[GlobalVariables.ingredient1]);
-
-        /*if (GlobalVariables.actualOrder == 0)
+        if (GlobalVariables.actualOrder == 0)
         {
-            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.orderListRecipe1.Length);
+            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe.Length);
         }
         else if (GlobalVariables.actualOrder == 1)
         {
-            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe2.Length);
-            GlobalVariables.ingredient2 = Random.Range(0, GlobalVariables.secondIngredientOrderListRecipe2[GlobalVariables.ingredient1].Length);
-        }*/
+            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe.Length);
+            GlobalVariables.ingredient2 = Random.Range(0, GlobalVariables.secondIngredientOrderListRecipe[GlobalVariables.ingredient1].Length);
+        }
 
 
     }
@@ -65,15 +60,13 @@ public class OrderSystem : MonoBehaviour
 
         if (GlobalVariables.actualOrder == 0)
         {
-            UpdateIngredientUI(UI_Tomato_ingredient1, GlobalVariables.ingredient1 == 0);
-            UpdateIngredientUI(UI_Meat_ingredient1, GlobalVariables.ingredient1 == 1);
-
-             Debug.Log("Actual ingredient : " + GlobalVariables.ingredient1);
+            UpdateIngredientUI(UI_Meat_ingredient1, GlobalVariables.ingredient1 == 0);
+            UpdateIngredientUI(UI_Tomato_ingredient1, GlobalVariables.ingredient1 == 1);
         }
         else
         {
             UpdateIngredientUI(UI_Meat_ingredient2, GlobalVariables.ingredient1 == 0);
-            UpdateIngredientUI(UI_Tomato_Bottom_ingredient2, GlobalVariables.ingredient1 == 0);
+            UpdateIngredientUI(UI_Tomato_Bottom_ingredient2, GlobalVariables.ingredient1 == 1);
 
             if (GlobalVariables.ingredient1 == 0)
             {
