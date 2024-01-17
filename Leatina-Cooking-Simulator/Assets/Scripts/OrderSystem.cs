@@ -36,9 +36,15 @@ public class OrderSystem : MonoBehaviour
 
     void GenerateRandomRecipe()
     {
-        GlobalVariables.actualOrder = Random.Range(0, 2);
+       // GlobalVariables.actualOrder = Random.Range(0, 2);
 
-        if (GlobalVariables.actualOrder == 0)
+        GlobalVariables.actualOrder = 0;
+        GlobalVariables.ingredient1 = 1;
+
+       
+        //Debug.Log("Ingrédient : " + GlobalVariables.orderListRecipe1[GlobalVariables.ingredient1]);
+
+        /*if (GlobalVariables.actualOrder == 0)
         {
             GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.orderListRecipe1.Length);
         }
@@ -46,17 +52,23 @@ public class OrderSystem : MonoBehaviour
         {
             GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe2.Length);
             GlobalVariables.ingredient2 = Random.Range(0, GlobalVariables.secondIngredientOrderListRecipe2[GlobalVariables.ingredient1].Length);
-        }
+        }*/
+
+
     }
     void UpdateUI()
     {
         UpdateIngredientUI(UI_ingredient1, GlobalVariables.actualOrder == 0);
         UpdateIngredientUI(UI_ingredient2, GlobalVariables.actualOrder == 1);
 
+         Debug.Log("Actual order : " + GlobalVariables.actualOrder);
+
         if (GlobalVariables.actualOrder == 0)
         {
             UpdateIngredientUI(UI_Tomato_ingredient1, GlobalVariables.ingredient1 == 0);
             UpdateIngredientUI(UI_Meat_ingredient1, GlobalVariables.ingredient1 == 1);
+
+             Debug.Log("Actual ingredient : " + GlobalVariables.ingredient1);
         }
         else
         {

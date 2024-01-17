@@ -12,6 +12,8 @@ public class ValidateRecipe : MonoBehaviour
 
     private List<GameObject> sandwichItems = new List<GameObject>();
 
+    public CookMeat CookMeatZone;
+
     private void Start()
     {
         if (GlobalVariables.actualOrder == 0)
@@ -40,22 +42,22 @@ public class ValidateRecipe : MonoBehaviour
             {
                 if (secondItemTag == "Meat")
                 {
-                    SteakBehaviour steakComponent = other.gameObject.GetComponent<SteakBehaviour>();
+                Debug.Log("c'est de la viande'");
+                    if (CookMeatZone != null && CookMeatZone.EstSteakCuit(other.gameObject))
+                        {
+                            sandwichItems.Add(other.gameObject);
 
-                    if (steakComponent != null && steakComponent.EstCuit())
-                    {
-                        sandwichItems.Add(other.gameObject);
+                            Debug.Log("le steak est ajouté");
+                        }
                     }
-                }
                 else
                 {
                     sandwichItems.Add(other.gameObject);
                 }
             }
-            else if (other.CompareTag(thirdItemTag) && !sandwichItems.Contains(other.gameObject) && thirdItemTag != null)
-            {
-                sandwichItems.Add(other.gameObject);
-            }
+            else if (thirdItemTag != null && other.CompareTag(thirdItemTag) && !sandwichItems.Contains(other.gameObject))
+                {
+                    sandwichItems.Add(other.gameObject);
         }
 
     }
