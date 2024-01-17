@@ -8,9 +8,8 @@ public static class GlobalVariables
     public static bool hotPan = false;
     public static bool validRecipe = false;
 
-    public static string[] orderListRecipe1 = { "Tomato", "Meat"};
-    public static string[] firstIngredientOrderListRecipe2 = { "Meat", "Tomato"};
-    public static string[][] secondIngredientOrderListRecipe2 = {
+    public static string[] firstIngredientOrderListRecipe = { "Meat", "Tomato"};
+    public static string[][] secondIngredientOrderListRecipe = {
         new string[] { "Tomato", "Onion", "Mushroom" },
         new string[] { "Onion", "Mushroom" }
     };

@@ -17,7 +17,6 @@ public class CookMeat : MonoBehaviour
             }
 
             if (!etatCuissonSteaks[other.gameObject]) {
-                Debug.Log("la viande cuit");
                 
                 StartCoroutine(CookAndDarkenMeat(other.gameObject));
                 etatCuissonSteaks[other.gameObject] = true;
@@ -31,6 +30,7 @@ public class CookMeat : MonoBehaviour
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
         audioSource.clip = cookSound;
         audioSource.Play();
+        audioSource.volume = 0.5f;
 
         yield return new WaitForSeconds(5f);
 
@@ -43,12 +43,10 @@ public class CookMeat : MonoBehaviour
         {
             Color currentColor = rend.material.color;
 
-            float darkenFactor = 0.9f;
+            float darkenFactor = 0.3f;
             Color darkenedColor = new Color(currentColor.r * darkenFactor, currentColor.g * darkenFactor, currentColor.b * darkenFactor, currentColor.a);
 
             rend.material.color = darkenedColor;
-
-            Debug.Log("la viande a changé de couleur");
         }
     }
 
