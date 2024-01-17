@@ -5,28 +5,27 @@ using UnityEngine;
 public class CookMeat : MonoBehaviour
 {
     public AudioClip cookSound;
-
-    private SteakBehaviour steakScript;
-
-    private void Start()
-    {
-        steakScript = GetComponent<SteakBehaviour>();
-    }
+    private Dictionary<GameObject, bool> etatCuissonSteaks = new Dictionary<GameObject, bool>();
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Meat") && GlobalVariables.hotPan)
         {
-            if (steakScript != null && !steakScript.EstCuit())
+            if (!etatCuissonSteaks.ContainsKey(other.gameObject))
             {
-                //StartCoroutine(CookAndDarkenMeat(other.gameObject));
-                steakScript.CuireSteak();
+                etatCuissonSteaks.Add(other.gameObject, false);
             }
 
+            if (!etatCuissonSteaks[other.gameObject]) {
+                Debug.Log("la viande cuit");
+                
+                StartCoroutine(CookAndDarkenMeat(other.gameObject));
+                etatCuissonSteaks[other.gameObject] = true;
+            }
         }
     }
 
-    public IEnumerator CookAndDarkenMeat(GameObject meatObject)
+    private IEnumerator CookAndDarkenMeat(GameObject meatObject)
     {
         GameObject audioSourceObject = new GameObject("CookSound");
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
@@ -44,17 +43,24 @@ public class CookMeat : MonoBehaviour
         {
             Color currentColor = rend.material.color;
 
-            float darkenFactor = 1.2f;
+            float darkenFactor = 0.9f;
             Color darkenedColor = new Color(currentColor.r * darkenFactor, currentColor.g * darkenFactor, currentColor.b * darkenFactor, currentColor.a);
 
             rend.material.color = darkenedColor;
 
-            /*Debug.Log("la viande a changé de couleur");
+            Debug.Log("la viande a changé de couleur");
+        }
+    }
 
-            if (steakScript != null)
-            {
-                steakScript.CuireSteak();
-            }*/
+    public bool EstSteakCuit(GameObject steak)
+    {
+        if (etatCuissonSteaks.ContainsKey(steak))
+        {
+            return etatCuissonSteaks[steak];
+        }
+        else
+        {
+            return false;
         }
     }
 }

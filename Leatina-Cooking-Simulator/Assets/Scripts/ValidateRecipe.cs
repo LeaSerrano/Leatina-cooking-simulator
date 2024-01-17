@@ -8,15 +8,25 @@ public class ValidateRecipe : MonoBehaviour
     private int ingredientsRequired;
 
     private string secondItemTag;
+    private string thirdItemTag;
 
     private List<GameObject> sandwichItems = new List<GameObject>();
 
+    public CookMeat CookMeatZone;
+
     private void Start()
     {
-        if (GlobalVariables.actualOrder == 0 || GlobalVariables.actualOrder == 1)
+        if (GlobalVariables.actualOrder == 0)
         {
             ingredientsRequired = 3;
-            secondItemTag = GlobalVariables.orderList[GlobalVariables.actualOrder];
+            secondItemTag = GlobalVariables.orderListRecipe1[GlobalVariables.actualOrder];
+            thirdItemTag = null;
+        }
+        else
+        {
+            ingredientsRequired = 4;
+            secondItemTag = GlobalVariables.firstIngredientOrderListRecipe2[GlobalVariables.actualOrder];
+            thirdItemTag = GlobalVariables.secondIngredientOrderListRecipe2[GlobalVariables.ingredient1][GlobalVariables.ingredient2];
         }
     }
 
@@ -30,20 +40,24 @@ public class ValidateRecipe : MonoBehaviour
             }
             else if (other.CompareTag(secondItemTag) && !sandwichItems.Contains(other.gameObject))
             {
-                if (secondItemTag == "Tomato")
+                if (secondItemTag == "Meat")
+                {
+                Debug.Log("c'est de la viande'");
+                    if (CookMeatZone != null && CookMeatZone.EstSteakCuit(other.gameObject))
+                        {
+                            sandwichItems.Add(other.gameObject);
+
+                            Debug.Log("le steak est ajouté");
+                        }
+                    }
+                else
                 {
                     sandwichItems.Add(other.gameObject);
                 }
-                else if (secondItemTag == "Meat")
-                {
-                    SteakBehaviour steakComponent = other.gameObject.GetComponent<SteakBehaviour>();
-
-                    if (steakComponent != null && steakComponent.EstCuit())
-                    {
-                        sandwichItems.Add(other.gameObject);
-                    }
-                }
             }
+            else if (thirdItemTag != null && other.CompareTag(thirdItemTag) && !sandwichItems.Contains(other.gameObject))
+                {
+                    sandwichItems.Add(other.gameObject);
         }
 
     }
@@ -51,7 +65,7 @@ public class ValidateRecipe : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
 
-        if ((other.CompareTag("Bread") || other.CompareTag(secondItemTag)) && sandwichItems.Contains(other.gameObject) && sandwichItems.Count > 0)
+        if ((other.CompareTag("Bread") || other.CompareTag(secondItemTag) || other.CompareTag(thirdItemTag)) && sandwichItems.Contains(other.gameObject) && sandwichItems.Count > 0)
         {
             sandwichItems.Remove(other.gameObject);
         }
@@ -61,41 +75,115 @@ public class ValidateRecipe : MonoBehaviour
     {
         float errorMargin = 0.5f;
 
-        if (sandwichItems[0].CompareTag("Bread")) {
-            if (sandwichItems[1].CompareTag(secondItemTag) && sandwichItems[2].CompareTag("Bread")) {
-                 if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
-                    Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin)
+        /* if (GlobalVariables.actualOrder == 0)
+         {
+             if (sandwichItems[0].CompareTag("Bread"))
+             {
+                 if (sandwichItems[1].CompareTag(secondItemTag) && sandwichItems[2].CompareTag("Bread"))
                  {
-                    return true;
+                     if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                     else if (Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
                  }
-                 else if (Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
-                    Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+                 else if (sandwichItems[1].CompareTag("Bread") && sandwichItems[2].CompareTag(secondItemTag))
                  {
-                    return true;
+                     if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                         Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                     else if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                       Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
                  }
-            }
-            else if (sandwichItems[1].CompareTag("Bread") && sandwichItems[2].CompareTag(secondItemTag)) {
-                if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
-                    Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
+             }
+             else if (sandwichItems[0].CompareTag(secondItemTag))
+             {
+                 if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
+                         Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin)
                  {
-                    return true;
+                     return true;
                  }
-                  else if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
-                    Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+
+                 else if (Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
+                     Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
                  {
-                    return true;
+                     return true;
                  }
-            }
-        }
-        else if (sandwichItems[0].CompareTag(secondItemTag)) {
-            if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
-                    Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin)
+             }
+         }
+         else
+         {
+             if (sandwichItems[0].CompareTag("Bread"))
+             {
+                 if (sandwichItems[1].CompareTag(secondItemTag) && sandwichItems[2].CompareTag(thirdItemTag) && sandwichItems[3].CompareTag("Bread"))
+                 {
+                     if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[3].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                     else if (Mathf.Abs(sandwichItems[3].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin &&
+                        Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                 }
+                 else if (sandwichItems[1].CompareTag("Bread") && sandwichItems[2].CompareTag(secondItemTag))
+                 {
+                     if (Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                         Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                     else if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin &&
+                       Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin)
+                     {
+                         return true;
+                     }
+                 }
+             }
+             else if (sandwichItems[0].CompareTag(secondItemTag))
+             {
+                 if (Mathf.Abs(sandwichItems[1].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
+                         Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[2].transform.position.y) < errorMargin)
+                 {
+                     return true;
+                 }
+
+                 else if (Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
+                     Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
+                 {
+                     return true;
+                 }
+             }
+             else if (sandwichItems[0].CompareTag(thirdItemTag))
+             {
+             }*/
+
+        sandwichItems.Sort((a, b) => a.transform.position.y.CompareTo(b.transform.position.y));
+
+        if (GlobalVariables.actualOrder == 0)
+        {
+            if (sandwichItems[0].CompareTag("Bread") && sandwichItems[1].CompareTag(secondItemTag) && sandwichItems[2].CompareTag("Bread"))
             {
                 return true;
             }
-
-            else if (Mathf.Abs(sandwichItems[2].transform.position.y - sandwichItems[0].transform.position.y) < errorMargin &&
-                Mathf.Abs(sandwichItems[0].transform.position.y - sandwichItems[1].transform.position.y) < errorMargin)
+        }
+        else
+        {
+            if (sandwichItems[0].CompareTag("Bread") && sandwichItems[1].CompareTag(secondItemTag) && sandwichItems[1].CompareTag(thirdItemTag) && sandwichItems[3].CompareTag("Bread"))
             {
                 return true;
             }

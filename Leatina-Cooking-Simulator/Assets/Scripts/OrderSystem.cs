@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class OrderSystem : MonoBehaviour
 {
-    public GameObject UI_Tomato;
-    public GameObject UI_Meat;
+    public GameObject UI_ingredient1;
+    public GameObject UI_Tomato_ingredient1;
+    public GameObject UI_Meat_ingredient1;
+
+    public GameObject UI_ingredient2;
+    public GameObject UI_Meat_ingredient2;
+    public GameObject UI_Tomato_Top_ingredient2;
+    public GameObject UI_Tomato_Bottom_ingredient2;
+    public GameObject UI_Onion_ingredient2;
+    public GameObject UI_Mushroom_ingredient2;
+    
 
     private int orderListSize;
     void Start()
     {
-        //orderListSize = GlobalVariables.orderList.Length;
-        GlobalVariables.actualOrder = Random.Range(0, 1);
-
+        GenerateRandomRecipe();
         UpdateUI();
     }
 
@@ -20,28 +27,74 @@ public class OrderSystem : MonoBehaviour
     {
         if (GlobalVariables.shouldChangeRecipe && !GlobalVariables.shouldDespawnIngredients)
         {
-            if(GlobalVariables.actualOrder == 0) {
-                GlobalVariables.actualOrder = 1;
-            }
-            else {
-                GlobalVariables.actualOrder = 0;
-            }
-
+            GenerateRandomRecipe();
             UpdateUI();
 
            GlobalVariables.shouldChangeRecipe = false;
         }
     }
 
+    void GenerateRandomRecipe()
+    {
+       // GlobalVariables.actualOrder = Random.Range(0, 2);
+
+        GlobalVariables.actualOrder = 0;
+        GlobalVariables.ingredient1 = 1;
+
+       
+        //Debug.Log("Ingrédient : " + GlobalVariables.orderListRecipe1[GlobalVariables.ingredient1]);
+
+        /*if (GlobalVariables.actualOrder == 0)
+        {
+            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.orderListRecipe1.Length);
+        }
+        else if (GlobalVariables.actualOrder == 1)
+        {
+            GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe2.Length);
+            GlobalVariables.ingredient2 = Random.Range(0, GlobalVariables.secondIngredientOrderListRecipe2[GlobalVariables.ingredient1].Length);
+        }*/
+
+
+    }
     void UpdateUI()
     {
-        if (UI_Tomato != null)
+        UpdateIngredientUI(UI_ingredient1, GlobalVariables.actualOrder == 0);
+        UpdateIngredientUI(UI_ingredient2, GlobalVariables.actualOrder == 1);
+
+         Debug.Log("Actual order : " + GlobalVariables.actualOrder);
+
+        if (GlobalVariables.actualOrder == 0)
         {
-            UI_Tomato.SetActive(GlobalVariables.actualOrder == 0);
+            UpdateIngredientUI(UI_Tomato_ingredient1, GlobalVariables.ingredient1 == 0);
+            UpdateIngredientUI(UI_Meat_ingredient1, GlobalVariables.ingredient1 == 1);
+
+             Debug.Log("Actual ingredient : " + GlobalVariables.ingredient1);
         }
-        if (UI_Meat != null)
+        else
         {
-            UI_Meat.SetActive(GlobalVariables.actualOrder == 1);
+            UpdateIngredientUI(UI_Meat_ingredient2, GlobalVariables.ingredient1 == 0);
+            UpdateIngredientUI(UI_Tomato_Bottom_ingredient2, GlobalVariables.ingredient1 == 0);
+
+            if (GlobalVariables.ingredient1 == 0)
+            {
+                UpdateIngredientUI(UI_Tomato_Top_ingredient2, GlobalVariables.ingredient2 == 0);
+                UpdateIngredientUI(UI_Onion_ingredient2, GlobalVariables.ingredient2 == 1);
+                UpdateIngredientUI(UI_Mushroom_ingredient2, GlobalVariables.ingredient2 == 2);
+            }
+            else if (GlobalVariables.ingredient1 == 1)
+            {
+                UpdateIngredientUI(UI_Onion_ingredient2, GlobalVariables.ingredient2 == 0);
+                UpdateIngredientUI(UI_Mushroom_ingredient2, GlobalVariables.ingredient2 == 1);
+            }
         }
     }
+
+    void UpdateIngredientUI(GameObject ingredientUI, bool condition)
+    {
+        if (ingredientUI != null)
+        {
+            ingredientUI.SetActive(condition);
+        }
+    }
+
 }
