@@ -10,8 +10,9 @@ public class OrderSystem : MonoBehaviour
     private int orderListSize;
     void Start()
     {
-        orderListSize = GlobalVariables.orderList.Length;
-        GlobalVariables.actualOrder = Random.Range(0, orderListSize);
+        //orderListSize = GlobalVariables.orderList.Length;
+        GlobalVariables.actualOrder = Random.Range(0, 1);
+
         UpdateUI();
     }
 

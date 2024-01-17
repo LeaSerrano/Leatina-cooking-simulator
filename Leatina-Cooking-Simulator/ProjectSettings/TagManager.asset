@@ -11,6 +11,8 @@ TagManager:
   - Tomato
   - Bread
   - Meat
+  - Garlic
+  - Mushroom
   layers:
   - Default
   - TransparentFX
