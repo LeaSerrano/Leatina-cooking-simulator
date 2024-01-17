@@ -7,10 +7,7 @@ public class ValidateRecipe : MonoBehaviour
     private int ingredientsPresent = 0;
     private int ingredientsRequired;
 
-    private GameObject bread1;
-    private GameObject secondItem;
     private string secondItemTag;
-    private GameObject bread2;
 
     private List<GameObject> sandwichItems = new List<GameObject>();
 
@@ -21,10 +18,6 @@ public class ValidateRecipe : MonoBehaviour
             ingredientsRequired = 3;
             secondItemTag = GlobalVariables.orderList[GlobalVariables.actualOrder];
         }
-
-        bread1 = null;
-        bread2 = null;
-        secondItem = null;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +30,19 @@ public class ValidateRecipe : MonoBehaviour
             }
             else if (other.CompareTag(secondItemTag) && !sandwichItems.Contains(other.gameObject))
             {
-                sandwichItems.Add(other.gameObject);
+                if (secondItemTag == "Tomato")
+                {
+                    sandwichItems.Add(other.gameObject);
+                }
+                else if (secondItemTag == "Meat")
+                {
+                    SteakBehaviour steakComponent = other.gameObject.GetComponent<SteakBehaviour>();
+
+                    if (steakComponent != null && steakComponent.EstCuit())
+                    {
+                        sandwichItems.Add(other.gameObject);
+                    }
+                }
             }
         }
 
@@ -98,8 +103,6 @@ public class ValidateRecipe : MonoBehaviour
 
         return false;
     }
-
-
 
     void Update() {
 

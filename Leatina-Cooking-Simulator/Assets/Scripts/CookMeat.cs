@@ -6,19 +6,29 @@ public class CookMeat : MonoBehaviour
 {
     public AudioClip cookSound;
 
+    private SteakBehaviour steakScript;
+
+    private void Start()
+    {
+        steakScript = GetComponent<SteakBehaviour>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Meat") && GlobalVariables.hotPan)
         {
-            StartCoroutine(CookAndDarkenMeat(other.gameObject));
+            if (steakScript != null && !steakScript.EstCuit())
+            {
+                //StartCoroutine(CookAndDarkenMeat(other.gameObject));
+                steakScript.CuireSteak();
+            }
 
-            Debug.Log("la viande cuit");
         }
     }
 
-    IEnumerator CookAndDarkenMeat(GameObject meatObject)
+    public IEnumerator CookAndDarkenMeat(GameObject meatObject)
     {
-       GameObject audioSourceObject = new GameObject("CookSound");
+        GameObject audioSourceObject = new GameObject("CookSound");
         AudioSource audioSource = audioSourceObject.AddComponent<AudioSource>();
         audioSource.clip = cookSound;
         audioSource.Play();
@@ -34,12 +44,17 @@ public class CookMeat : MonoBehaviour
         {
             Color currentColor = rend.material.color;
 
-            float darkenFactor = 0.9f;
+            float darkenFactor = 1.2f;
             Color darkenedColor = new Color(currentColor.r * darkenFactor, currentColor.g * darkenFactor, currentColor.b * darkenFactor, currentColor.a);
 
             rend.material.color = darkenedColor;
 
-            Debug.Log("la viande a changé de couleur");
+            /*Debug.Log("la viande a changé de couleur");
+
+            if (steakScript != null)
+            {
+                steakScript.CuireSteak();
+            }*/
         }
     }
 }
