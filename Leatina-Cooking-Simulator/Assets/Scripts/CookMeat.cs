@@ -32,10 +32,18 @@ public class CookMeat : MonoBehaviour
         audioSource.Play();
         audioSource.volume = 0.5f;
 
+        Transform smoke = meatObject.transform.GetChild(0);
+
+        if (smoke != null)
+        {
+            smoke.gameObject.SetActive(true);
+        }
+
         yield return new WaitForSeconds(5f);
 
         audioSource.Stop();
         Destroy(audioSourceObject);
+        smoke.gameObject.SetActive(false);
 
         Renderer rend = meatObject.GetComponent<Renderer>();
 
