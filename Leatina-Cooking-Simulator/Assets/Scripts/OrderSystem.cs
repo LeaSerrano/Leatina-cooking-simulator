@@ -37,7 +37,6 @@ public class OrderSystem : MonoBehaviour
     void GenerateRandomRecipe()
     {
        GlobalVariables.actualOrder = Random.Range(0, 2);
-      
 
         if (GlobalVariables.actualOrder == 0)
         {
@@ -48,7 +47,6 @@ public class OrderSystem : MonoBehaviour
             GlobalVariables.ingredient1 = Random.Range(0, GlobalVariables.firstIngredientOrderListRecipe.Length);
             GlobalVariables.ingredient2 = Random.Range(0, GlobalVariables.secondIngredientOrderListRecipe[GlobalVariables.ingredient1].Length);
         }
-
 
     }
     void UpdateUI()
